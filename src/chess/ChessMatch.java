@@ -26,26 +26,31 @@ public class ChessMatch {
 		}
 		return mat;
 	}
-	
+
 	public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targertPosition) {
 		Position source = sourcePosition.toPosition();
 		Position target = targertPosition.toPosition();
 		validateSourcePosition(source);
 		Piece capturedPiece = makeMove(source, target);
-		return (ChessPiece)capturedPiece;
+		return (ChessPiece) capturedPiece;
 	}
-	
+
 	private void validateSourcePosition(Position position) {
-		if(!board.thereIsAPiece(position)) {
+		if (!board.thereIsAPiece(position)) {
 			throw new ChessException("Nao existe essa posicao no tabuleiro!");
 		}
-		
+		if (!board.piece(position).isThereAnyPossibleMove()) {
+
+			throw new ChessException("Nao existe movimentos possiveis para peca escolhida");
+
+		}
+
 	}
-	
+
 	private Piece makeMove(Position source, Position target) {
 		Piece p = board.removePiece(source);
 		Piece capturedPiece = board.removePiece(target);
-		board.placePiece(p,target);
+		board.placePiece(p, target);
 		return capturedPiece;
 	}
 

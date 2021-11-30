@@ -24,7 +24,7 @@ public class Program {
 				System.out.println();
 				System.out.print("Source: ");
 				ChessPosition source = UI.readChessPosition(sc);
-
+				
 				boolean[][] possibleMoves = chessMatch.possibleMoves(source);
 				UI.clearScreen();
 				UI.printBoard(chessMatch.getPieces(), possibleMoves);
@@ -37,6 +37,12 @@ public class Program {
 
 				if (capturedPiece != null) {
 					captured.add(capturedPiece);
+				}
+				
+				if (chessMatch.getPromoted() != null) {
+					System.out.print("Entre com a letra da peca que deseja promover para (Q/N/B/R): ");
+					String type = sc.nextLine();
+					chessMatch.replacePromotedPiece(type);
 				}
 			} catch (ChessException ex) {
 				System.out.println(ex.getMessage());
